@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { io } from "socket.io-client";
-import { HOST } from "../utils/contstants";
+
 
 const initialState = {
     userInfo:localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,

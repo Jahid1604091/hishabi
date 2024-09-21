@@ -1,0 +1,46 @@
+/* Orders.css */
+
+.order-form-container {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 10px;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.order-summary td {
+  padding: 5px;
+}
+
+.total-cost {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.zoom-effect {
+  transition: transform 0.3s ease-in-out;
+}
+
+.zoom-effect:hover {
+  transform: scale(1.2);
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+  height: 58px; /* Adjust this value as needed */
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+}
+
+.floating-label {
+  height: 58px; /* Matches the height of the form controls */
+  display: flex;
+  align-items: center;
+  border-radius: 0;
+}
+
+.table td,
+.table th {
+  vertical-align: middle; /* Centers content vertically */
+}

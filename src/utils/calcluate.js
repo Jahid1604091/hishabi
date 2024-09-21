@@ -1,16 +1,15 @@
-import { paperPrices } from "../data";
+// import { paperPrices } from "../data";
 
 function check(A, B, a, b) {
-  return ((A >= a) && (B >= b));
+  return A >= a && B >= b;
 }
 
 function calculatePerPageSheet(w, l, W, L) {
- 
   /// always take L >= W && l >= w
   let tot1 = 0,
     tot2 = 0;
-  let x = L / l;
-  let y = W / w;
+  let x = Math.floor(L / l); //floor
+  let y =  Math.floor(W / w); //flooor
   let L1 = L % l;
   tot1 = x * y;
   if (check(L1, W, w, l)) {
@@ -19,8 +18,8 @@ function calculatePerPageSheet(w, l, W, L) {
     tot1 += x * y;
   }
   if (check(L, W, w, l)) {
-    x = L / w;
-    y = W / l;
+    x =  Math.floor(L / w);
+    y =  Math.floor(W / l);
     let W1 = W % l;
     tot2 = x * y;
     if (check(L, W1, l, w)) {
@@ -39,23 +38,28 @@ export const calculateSheetCost = (
   amount,
   width1,
   height1,
-  paperType
+  paperType,
+  paperPrices
 ) => {
   let usedPaperSize = Number(width1 * height1);
   let usedPaperSizeInString = `${width1}*${height1}`;
 
-  const perPage = calculatePerPageSheet(width, height, width1, height1);
-  const sheetNeeded = Number(amount / perPage);
+  
+  const perPage = Math.floor(calculatePerPageSheet(width, height, width1, height1)) || 0;
+  const sheetNeeded = Number(amount / perPage) || 0;
 
-  console.log(perPage);
   //calcute per sheet price
-  const data = paperPrices.find(
+  const data = paperPrices?.find(
     (paper) => paper.type == paperType && paper.size == usedPaperSizeInString
   );
 
-  const perSheetPrice = data.price / 500;
-  //   console.log(perSheetPrice)
+  if(data){
+    const perSheetPrice = data.price / 500;
+    const totalSheetCost = Number(perSheetPrice * sheetNeeded) || 0;
+    return { sheetCost: totalSheetCost, perPage, sheetNeeded };
+  }
+  else{
+    return 0;
+  }
 
-  return perSheetPrice * sheetNeeded;
-  //   console.log(price * sheetNeeded);
 };

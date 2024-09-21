@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 export default function App() {
   return (
     <>
-      <Toaster position="bottom-center" />
+      <Toaster position="top-center" />
       <Outlet />
     </>
   );

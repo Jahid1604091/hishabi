@@ -5,46 +5,43 @@ const URL = '/api/admin';
 
 export const adminApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getAllUsers: builder.query({
-            query:({search='',page})=> `${URL}/users?search=${search}&page=${page}`,
-            providesTags:['Users'],
-            
-            // transformResponse: responseData=>responseData.data
+        getAllPaperdetails: builder.query({
+            query: () => `${URL}/details`,
+            providesTags: ['Papers']
         }),
-        deleteUser:builder.mutation({
+
+        addPaperDetails:builder.mutation({
+            query:(data)=>({
+                url:`${URL}/paper/add-details`,
+                method:'POST',
+                body:data
+            }),
+            invalidatesTags:['Papers']
+        }),
+
+        updatePaperDetails:builder.mutation({
+            query:({id,data})=>({
+                url:`${URL}/paper/update-details/${id}`,
+                method:'PATCH',
+                body:data
+            }),
+            invalidatesTags:['Papers']
+        }),
+
+        deletePaperDetails:builder.mutation({
             query:(id)=>({
-                url:`${URL}/users/${id}`,
+                url:`${URL}/paper/delete-details/${id}`,
                 method:'DELETE',
             }),
-            invalidatesTags:['Users']
-        }),
-        getAllDoctors: builder.query({
-            query:({search,page})=> `${URL}/doctors?search=${search}&page=${page}`,
-            providesTags:['Doctors'],
-           
-        }),
-        approveAsDoctor:builder.mutation({
-            query:(id)=>({
-                url:`${URL}/approve-as-doctor/${id}`,
-                method:'PUT',
-            }),
-            invalidatesTags:['Doctors']
-        }),
-        removeAsDoctor:builder.mutation({
-            query:(id)=>({
-                url:`${URL}/remove-as-doctor/${id}`,
-                method:'PUT',
-            }),
-            invalidatesTags:['Doctors']
+            invalidatesTags:['Papers']
         }),
 
     })
 });
 
 export const {
-    useGetAllUsersQuery,
-    useDeleteUserMutation,
-    useGetAllDoctorsQuery,
-    useApproveAsDoctorMutation,
-    useRemoveAsDoctorMutation,
+   useGetAllPaperdetailsQuery,
+   useAddPaperDetailsMutation,
+   useUpdatePaperDetailsMutation,
+   useDeletePaperDetailsMutation
 } = adminApiSlice;
